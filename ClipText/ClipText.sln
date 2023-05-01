@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+# SharpDevelop 4.4
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipText", "ClipText.csproj", "{084D67B9-6A31-4E9A-A031-E40D0BFA472D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{084D67B9-6A31-4E9A-A031-E40D0BFA472D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{084D67B9-6A31-4E9A-A031-E40D0BFA472D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{084D67B9-6A31-4E9A-A031-E40D0BFA472D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{084D67B9-6A31-4E9A-A031-E40D0BFA472D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+EndGlobal
