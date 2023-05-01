@@ -24,46 +24,10 @@ namespace PublicDomain
         }
 
         /// <summary>
-        /// Gets or sets the keyword.
+        /// Gets or sets the target text file.
         /// </summary>
-        /// <value>The keyword.</value>
-        public string Keyword { get; set; } = "publicdomain";
-
-        /// <summary>
-        /// Gets or sets the checked target browser.
-        /// </summary>
-        /// <value>The checked target browser.</value>
-        public string CheckedTargetBrowser { get; set; } = "chromeToolStripMenuItem";
-
-        /// <summary>
-        /// Gets or sets the search terms mode.
-        /// </summary>
-        /// <value>The search terms mode.</value>
-        public string SearchTermsMode { get; set; } = "Add terms";
-
-        /// <summary>
-        /// Gets or sets the search terms list.
-        /// </summary>
-        /// <value>The search terms list.</value>
-        public List<string> SearchTermsList { get; set; } = new List<string>();
-
-        /// <summary>
-        /// Gets or sets the search engines list.
-        /// </summary>
-        /// <value>The search engines list.</value>
-        public List<string> SearchEnginesList { get; set; } = new List<string>();
-
-        /// <summary>
-        /// Gets or sets the checked search terms list.
-        /// </summary>
-        /// <value>The checked search terms list.</value>
-        public List<string> CheckedSearchTermsList { get; set; } = new List<string>();
-
-        /// <summary>
-        /// Gets or sets the checked search engines list.
-        /// </summary>
-        /// <value>The checked search engines list.</value>
-        public List<string> CheckedSearchEnginesList { get; set; } = new List<string>();
+        /// <value>The target text file.</value>
+        public string TargetTextFile { get; set; } = "Cliptext.txt";
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="T:PublicDomain.SettingsData"/> always on top.
