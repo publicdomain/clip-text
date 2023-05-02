@@ -27,6 +27,11 @@ namespace ClipText
         SharpClipboard clipboard = new SharpClipboard();
 
         /// <summary>
+        /// The add new line flag.
+        /// </summary>
+        bool? addNewLine = null;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="T:ClipText.MainForm"/> class.
         /// </summary>
         public MainForm()
@@ -51,7 +56,27 @@ namespace ClipText
         /// <param name="e">Event arguments.</param>
         private void OnClipboardChanged(Object sender, ClipboardChangedEventArgs e)
         {
-            // TODO Add code
+            // TODO Check for text [Can improve, see above]
+            if (e.ContentType == SharpClipboard.ContentTypes.Text)
+            {
+                try
+                {
+                    // Append current clipboard text
+                    File.AppendAllText(this.targetFileTextBox.Text, $"{(this.addNewLine != false ? Environment.NewLine : string.Empty)}{clipboard.ClipboardText}");
+
+                    // TODO If new line flag is not null [Can be improved]; it already did the job yet may be implemented differently]
+                    if (this.addNewLine != null)
+                    {
+                        // Set it to null
+                        this.addNewLine = null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Write to error log
+                    File.AppendAllText("ClipText_ErrorLog.txt", $"{Environment.NewLine}Error when appending to \"{this.targetFileTextBox.Text}\". Message: {ex.Message}");
+                }
+            }
         }
 
         /// <summary>
@@ -69,6 +94,33 @@ namespace ClipText
                 {
                     // Advise user
                     MessageBox.Show("Please set target text file.", "Empty text file", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    // Halt flow
+                    return;
+                }
+
+                // Check if must add new line
+                if (this.addNewLine == null)
+                {
+                    try
+                    {
+                        // Check if file doesn't exist
+                        if (!File.Exists(this.targetFileTextBox.Text))
+                        {
+                            // No previous file hence no need to prepend a new line
+                            this.addNewLine = false;
+                        }
+                        else
+                        {
+                            // Set according to file end
+                            this.addNewLine = !File.ReadAllText(this.targetFileTextBox.Text).EndsWith(Environment.NewLine, StringComparison.CurrentCulture);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // TODO There was an error, assume no new line [User can be advised, flow can be halted]
+                        this.addNewLine = true;
+                    }
                 }
 
                 // Subscribe 
@@ -84,6 +136,9 @@ namespace ClipText
             {
                 // Unsubscribe 
                 this.clipboard.ClipboardChanged -= OnClipboardChanged;
+
+                // Null new line flag
+                this.addNewLine = null;
 
                 // Update button text
                 this.startStopButton.Text = "&Start";
