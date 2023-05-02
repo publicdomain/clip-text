@@ -13,6 +13,8 @@ namespace ClipText
     using System.Windows.Forms;
     using System.Xml.Serialization;
     using PublicDomain;
+    using WK.Libraries.SharpClipboardNS;
+    using static WK.Libraries.SharpClipboardNS.SharpClipboard;
 
     /// <summary>
     /// Main form.
@@ -20,12 +22,36 @@ namespace ClipText
     public partial class MainForm : Form
     {
         /// <summary>
+        /// The clipboard.
+        /// </summary>
+        SharpClipboard clipboard = new SharpClipboard();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="T:ClipText.MainForm"/> class.
         /// </summary>
         public MainForm()
         {
             // The InitializeComponent() call is required for Windows Forms designer support.
             this.InitializeComponent();
+
+            // TODO Set accept button [Can be done via designer]
+            this.AcceptButton = this.startStopButton;
+
+            // TODO Only do text [Check removing e.ContentType comparison]
+            this.clipboard.ObservableFormats.Texts = true;
+            this.clipboard.ObservableFormats.Files = false;
+            this.clipboard.ObservableFormats.Images = false;
+            this.clipboard.ObservableFormats.Others = false;
+        }
+
+        /// <summary>
+        /// Handles the clipboard changed event
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
+        private void OnClipboardChanged(Object sender, ClipboardChangedEventArgs e)
+        {
+            // TODO Add code
         }
 
         /// <summary>
@@ -35,7 +61,36 @@ namespace ClipText
         /// <param name="e">Event arguments.</param>
         private void OnStartStopButtonClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Check for star(t)
+            if (this.startStopButton.Text.EndsWith("t", StringComparison.InvariantCulture))
+            {
+                // First check there's a file
+                if (this.targetFileTextBox.TextLength == 0)
+                {
+                    // Advise user
+                    MessageBox.Show("Please set target text file.", "Empty text file", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                // Subscribe 
+                this.clipboard.ClipboardChanged += OnClipboardChanged;
+
+                // Update button text
+                this.startStopButton.Text = "&Stop";
+
+                // Update button icon
+                this.startStopButton.ImageIndex = 1;
+            }
+            else
+            {
+                // Unsubscribe 
+                this.clipboard.ClipboardChanged -= OnClipboardChanged;
+
+                // Update button text
+                this.startStopButton.Text = "&Start";
+
+                // Update button icon
+                this.startStopButton.ImageIndex = 0;
+            }
         }
 
         /// <summary>
