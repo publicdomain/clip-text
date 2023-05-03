@@ -163,6 +163,9 @@ namespace ClipText
 
                 // Update button icon
                 this.startStopButton.ImageIndex = 1;
+
+                // Disable text box
+                this.targetFileTextBox.Enabled = false;
             }
             else
             {
@@ -177,6 +180,91 @@ namespace ClipText
 
                 // Update button icon
                 this.startStopButton.ImageIndex = 0;
+
+                // Enable text box
+                this.targetFileTextBox.Enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// Handles the new tool strip menu item click.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
+        private void OnNewToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            // Collect dialog result from user
+            DialogResult userDialogResult = MessageBox.Show($"Backup target text file to start afresh?{Environment.NewLine}{Environment.NewLine}YES = Copy current to backup file.{Environment.NewLine}NO = Overwrite resetting contents.{Environment.NewLine}Cancel = Discard \"File.New\" operation.", "Backup on File/New", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button3);
+
+            // Halt flow on cancel
+            if (userDialogResult == DialogResult.Cancel)
+            {
+                // Halt flow
+                return;
+            }
+
+            // Get absolute path for source
+            string sourceFilePath = Path.GetFullPath(this.targetFileTextBox.Text);
+
+            // Backup 
+            if (userDialogResult == DialogResult.Yes)
+            {
+                try
+                {
+                    // Set path for backup
+                    string backupFilePath = Path.Combine(Path.GetDirectoryName(sourceFilePath), String.Concat(Path.GetFileNameWithoutExtension(sourceFilePath), $"-{(int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds}", Path.GetExtension(sourceFilePath)));
+
+                    // Backup file with epoch
+                    File.Copy(sourceFilePath, backupFilePath);
+
+                    // Delete source file
+                    File.Delete(sourceFilePath);
+
+                    // TODO No previous file hence no need to prepend a new line [DRY, accuonting for catch]
+                    this.addNewLine = false;
+
+                    // TODO Reset [DRY, accuonting for catch]
+                    this.ResetCaptures();
+                }
+                catch (Exception ex)
+                {
+                    // Set error message
+                    string errorMessage = $"Error when backing up to \"{sourceFilePath}\". Message: {ex.Message}";
+
+                    // Write to error log
+                    File.AppendAllText("ClipText_ErrorLog.txt", $"{Environment.NewLine}errorMessage");
+
+                    // Advise user
+                    MessageBox.Show($"{errorMessage}{Environment.NewLine}{Environment.NewLine}File/New operation cancelled.", "File/New error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    // Halt flow
+                    return;
+                }
+            }
+            else
+            {
+                try
+                {
+                    // No backup, simply delete file
+                    File.Delete(sourceFilePath);
+
+                    // TODO No previous file hence no need to prepend a new line [DRY, accuonting for catch]
+                    this.addNewLine = false;
+
+                    // TODO Reset [DRY, accuonting for catch]
+                    this.ResetCaptures();
+                }
+                catch (Exception ex)
+                {
+                    // Set error message
+                    string errorMessage = $"Error when deleting \"{sourceFilePath}\". Message: {ex.Message}";
+
+                    // Advise user
+                    MessageBox.Show($"{errorMessage}{Environment.NewLine}", "File/New error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    // Write to error log
+                    File.AppendAllText("ClipText_ErrorLog.txt", $"{Environment.NewLine}errorMessage");
+                }
             }
         }
 
@@ -186,16 +274,6 @@ namespace ClipText
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event arguments.</param>
         private void OnOpenFileButtonClick(object sender, EventArgs e)
-        {
-            // TODO Add code
-        }
-
-        /// <summary>
-        /// Handles the new tool strip menu item click.
-        /// </summary>
-        /// <param name="sender">Sender object.</param>
-        /// <param name="e">Event arguments.</param>
-        private void OnNewToolStripMenuItemClick(object sender, EventArgs e)
         {
             // TODO Add code
         }
