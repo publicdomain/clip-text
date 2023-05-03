@@ -148,8 +148,6 @@ namespace ClipText
 			// 
 			// rememberTextFileToolStripMenuItem
 			// 
-			this.rememberTextFileToolStripMenuItem.Checked = true;
-			this.rememberTextFileToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.rememberTextFileToolStripMenuItem.Name = "rememberTextFileToolStripMenuItem";
 			this.rememberTextFileToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
 			this.rememberTextFileToolStripMenuItem.Text = "&Remember text file";

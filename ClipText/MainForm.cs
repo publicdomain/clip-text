@@ -37,6 +37,23 @@ namespace ClipText
         int captures = 0;
 
         /// <summary>
+        /// Gets or sets the associated icon.
+        /// </summary>
+        /// <value>The associated icon.</value>
+        private Icon associatedIcon = null;
+
+        /// <summary>
+        /// The settings data.
+        /// </summary>
+        private SettingsData settingsData = null;
+
+        /// <summary>
+        /// The settings data path.
+        /// </summary>
+        private string settingsDataPath = $"{Application.ProductName}-SettingsData.txt";
+
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="T:ClipText.MainForm"/> class.
         /// </summary>
         public MainForm()
@@ -52,6 +69,31 @@ namespace ClipText
             this.clipboard.ObservableFormats.Files = false;
             this.clipboard.ObservableFormats.Images = false;
             this.clipboard.ObservableFormats.Others = false;
+
+            /* Settings data */
+
+            // HACK Flag for options
+            bool setDefaultOptions = false;
+
+            // Check for settings file
+            if (!File.Exists(this.settingsDataPath))
+            {
+                // Create new settings file
+                this.SaveSettingsFile(this.settingsDataPath, new SettingsData());
+
+                // Toggle flag
+                setDefaultOptions = true;
+            }
+
+            // Load settings from disk
+            this.settingsData = this.LoadSettingsFile(this.settingsDataPath);
+
+            // Check if must set default options
+            if (setDefaultOptions)
+            {
+                // Set default options
+                this.settingsData.CheckedOptionsList = new List<string>() { "rememberTextFileToolStripMenuItem" };
+            }
         }
 
         /// <summary>
@@ -360,7 +402,39 @@ namespace ClipText
         /// <param name="e">Event arguments.</param>
         private void OnMainFormFormClosing(object sender, FormClosingEventArgs e)
         {
-            // TODO Add code
+            /* Target text file */
+
+            // Confirm it's checked and there's something to work with
+            if (this.rememberTextFileToolStripMenuItem.Checked && this.targetFileTextBox.Text.Length > 0)
+            {
+                // Save to settings data
+                this.settingsData.TargetTextFile = this.targetFileTextBox.Text;
+            }
+
+            /* Checked options */
+
+            // New checked options list
+            List<string> checkedOptionsList = new List<string>();
+
+            // Set checked options list
+            foreach (ToolStripMenuItem toolStripMenuItem in this.optionsToolStripMenuItem.DropDownItems)
+            {
+                // Check if checked
+                if (toolStripMenuItem.Checked)
+                {
+                    // Add to checked options list
+                    checkedOptionsList.Add(toolStripMenuItem.Name);
+                }
+            }
+
+            // Set into settings data
+            this.settingsData.CheckedOptionsList.Clear();
+            this.settingsData.CheckedOptionsList = checkedOptionsList;
+
+            /* Save to disk */
+
+            // Save settings data to disk
+            this.SaveSettingsFile(this.settingsDataPath, this.settingsData);
         }
 
         /// <summary>
