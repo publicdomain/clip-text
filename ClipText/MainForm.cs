@@ -11,6 +11,7 @@ namespace ClipText
     using System.Diagnostics;
     using System.Drawing;
     using System.IO;
+    using System.Reflection;
     using System.Windows.Forms;
     using System.Xml.Serialization;
     using PublicDomain;
@@ -70,6 +71,15 @@ namespace ClipText
             this.clipboard.ObservableFormats.Files = false;
             this.clipboard.ObservableFormats.Images = false;
             this.clipboard.ObservableFormats.Others = false;
+
+            /* Set icons */
+
+            // Set associated icon from exe file
+            this.associatedIcon = Icon.ExtractAssociatedIcon(typeof(MainForm).GetTypeInfo().Assembly.Location);
+
+            // Set PublicDomain.is tool strip menu item image
+            this.freeReleasesPublicDomainisToolStripMenuItem.Image = this.associatedIcon.ToBitmap();
+
 
             /* Settings data */
 
@@ -193,7 +203,7 @@ namespace ClipText
                     }
                     catch (Exception ex)
                     {
-                        // TODO There was an error, assume no new line [User can be advised, flow can be halted]
+                        // TODO HACK There was an error, assume no new line [User can be advised, flow can be halted, further checks can be performed]
                         this.addNewLine = true;
                     }
                 }
@@ -386,7 +396,56 @@ namespace ClipText
         /// <param name="e">Event arguments.</param>
         private void OnAboutToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Set license text
+            var licenseText = $"CC0 1.0 Universal (CC0 1.0) - Public Domain Dedication{Environment.NewLine}" +
+                $"https://creativecommons.org/publicdomain/zero/1.0/legalcode{Environment.NewLine}{Environment.NewLine}" +
+                $"Libraries and icons have separate licenses.{Environment.NewLine}{Environment.NewLine}" +
+                $"SharpClipboard by Willy-Kimura - MIT License{Environment.NewLine}" +
+                $"https://github.com/Willy-Kimura/SharpClipboard{Environment.NewLine}{Environment.NewLine}" +
+                $"Clipboard-paper icon by Clker-Free-Vector-Images - Pixabay's Content license{Environment.NewLine}" +
+                $"https://pixabay.com/vectors/clipboard-paper-office-business-27848/{Environment.NewLine}{Environment.NewLine}" +
+                $"Buttons icon by Clker-Free-Vector-Images - Pixabay's Content license{Environment.NewLine}" +
+                $"https://pixabay.com/vectors/buttons-stop-play-pause-record-35531/{Environment.NewLine}{Environment.NewLine}" +
+                $"Patreon icon used according to published brand guidelines{Environment.NewLine}" +
+                $"https://www.patreon.com/brand{Environment.NewLine}{Environment.NewLine}" +
+                $"GitHub mark icon used according to published logos and usage guidelines{Environment.NewLine}" +
+                $"https://github.com/logos{Environment.NewLine}{Environment.NewLine}" +
+                $"DonationCoder icon used with permission{Environment.NewLine}" +
+                $"https://www.donationcoder.com/forum/index.php?topic=48718{Environment.NewLine}{Environment.NewLine}" +
+                $"PublicDomain icon is based on the following source images:{Environment.NewLine}{Environment.NewLine}" +
+                $"Bitcoin by GDJ - Pixabay License{Environment.NewLine}" +
+                $"https://pixabay.com/vectors/bitcoin-digital-currency-4130319/{Environment.NewLine}{Environment.NewLine}" +
+                $"Letter P by ArtsyBee - Pixabay License{Environment.NewLine}" +
+                $"https://pixabay.com/illustrations/p-glamour-gold-lights-2790632/{Environment.NewLine}{Environment.NewLine}" +
+                $"Letter D by ArtsyBee - Pixabay License{Environment.NewLine}" +
+                $"https://pixabay.com/illustrations/d-glamour-gold-lights-2790573/{Environment.NewLine}{Environment.NewLine}";
+
+            // Prepend sponsors
+            licenseText = $"RELEASE SUPPORTERS:{Environment.NewLine}{Environment.NewLine}* Jesse Reichler (mouser){Environment.NewLine}* Max P.{Environment.NewLine}* Kathryn S.{Environment.NewLine}* Cranioscopical{Environment.NewLine}* tomos{Environment.NewLine}* luvnbeast{Environment.NewLine}* nkormanik{Environment.NewLine}{Environment.NewLine}=========={Environment.NewLine}{Environment.NewLine}" + licenseText;
+
+            // Set title
+            string programTitle = typeof(MainForm).GetTypeInfo().Assembly.GetCustomAttribute<AssemblyTitleAttribute>().Title;
+
+            // Set version for generating semantic version
+            Version version = typeof(MainForm).GetTypeInfo().Assembly.GetName().Version;
+
+            // Set about form
+            var aboutForm = new AboutForm(
+                $"About {programTitle}",
+                $"{programTitle} {version.Major}.{version.Minor}.{version.Build}",
+                $"Made for: rgdot{Environment.NewLine}DonationCoder.com{Environment.NewLine}Day #123, Week #18 @ May 03, 2023",
+                licenseText,
+                this.Icon.ToBitmap())
+            {
+                // Set about form icon
+                Icon = this.associatedIcon,
+
+                // Set always on top
+                TopMost = this.TopMost
+            };
+
+            // Show about form
+            aboutForm.ShowDialog();
         }
 
         /// <summary>

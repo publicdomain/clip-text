@@ -70,6 +70,7 @@
     <None Include="Resources\rec_32.png" />
     <None Include="Resources\SharpClipboard.dll" />
     <None Include="Resources\stop_32.png" />
+    <None Include="Resources\SharpClipboard_LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AboutForm.resx">
