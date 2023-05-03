@@ -392,7 +392,18 @@ namespace ClipText
         /// <param name="e">Event arguments.</param>
         private void OnMainFormLoad(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Check options
+            foreach (ToolStripMenuItem toolStripMenuItem in this.optionsToolStripMenuItem.DropDownItems)
+            {
+                // Set checked state
+                toolStripMenuItem.Checked = this.settingsData.CheckedOptionsList.Contains(toolStripMenuItem.Name);
+            }
+
+            // Set file name
+            this.targetFileTextBox.Text = this.settingsData.TargetTextFile;
+
+            // Set topmost by settings data
+            this.TopMost = this.settingsData.CheckedOptionsList.Contains("alwaysOnTopToolStripMenuItem");
         }
 
         /// <summary>

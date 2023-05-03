@@ -281,7 +281,6 @@ namespace ClipText
 			this.targetFileTextBox.Name = "targetFileTextBox";
 			this.targetFileTextBox.Size = new System.Drawing.Size(228, 26);
 			this.targetFileTextBox.TabIndex = 2;
-			this.targetFileTextBox.Text = "Cliptext.txt";
 			// 
 			// startStopButton
 			// 
