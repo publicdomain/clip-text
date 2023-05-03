@@ -75,6 +75,9 @@ namespace ClipText
                         // Set it to null
                         this.addNewLine = null;
                     }
+
+                    // Raise
+                    this.RaiseCaptures();
                 }
                 catch (Exception ex)
                 {
@@ -91,6 +94,18 @@ namespace ClipText
         {
             // Raise
             this.captures++;
+
+            // Update in GUI
+            this.capturesToolStripStatusLabel.Text = this.captures.ToString();
+        }
+
+        /// <summary>
+        /// Resets the captures.
+        /// </summary>
+        private void ResetCaptures()
+        {
+            // Reset 
+            this.captures = 0;
 
             // Update in GUI
             this.capturesToolStripStatusLabel.Text = this.captures.ToString();
