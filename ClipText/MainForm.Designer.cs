@@ -49,8 +49,8 @@ namespace ClipText
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.mainStatusStrip = new System.Windows.Forms.StatusStrip();
-			this.termsTextToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-			this.termsToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.capturesTextToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.capturesToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.textFileSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
 			this.label1 = new System.Windows.Forms.Label();
@@ -71,10 +71,10 @@ namespace ClipText
 			// mainMenuStrip
 			// 
 			this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.minimizeToolStripMenuItem,
-									this.fileToolStripMenuItem,
-									this.optionsToolStripMenuItem,
-									this.helpToolStripMenuItem});
+			this.minimizeToolStripMenuItem,
+			this.fileToolStripMenuItem,
+			this.optionsToolStripMenuItem,
+			this.helpToolStripMenuItem});
 			this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.mainMenuStrip.Name = "mainMenuStrip";
 			this.mainMenuStrip.Size = new System.Drawing.Size(284, 24);
@@ -90,10 +90,10 @@ namespace ClipText
 			// fileToolStripMenuItem
 			// 
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.newToolStripMenuItem,
-									this.openToolStripMenuItem,
-									this.toolStripSeparator,
-									this.exitToolStripMenuItem});
+			this.newToolStripMenuItem,
+			this.openToolStripMenuItem,
+			this.toolStripSeparator,
+			this.exitToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "&File";
@@ -133,8 +133,8 @@ namespace ClipText
 			// optionsToolStripMenuItem
 			// 
 			this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.alwaysOnTopToolStripMenuItem,
-									this.rememberTextFileToolStripMenuItem});
+			this.alwaysOnTopToolStripMenuItem,
+			this.rememberTextFileToolStripMenuItem});
 			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
 			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
 			this.optionsToolStripMenuItem.Text = "&Options";
@@ -157,11 +157,11 @@ namespace ClipText
 			// helpToolStripMenuItem
 			// 
 			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.freeReleasesPublicDomainisToolStripMenuItem,
-									this.originalThreadDonationCodercomToolStripMenuItem,
-									this.sourceCodeGithubcomToolStripMenuItem,
-									this.toolStripSeparator2,
-									this.aboutToolStripMenuItem});
+			this.freeReleasesPublicDomainisToolStripMenuItem,
+			this.originalThreadDonationCodercomToolStripMenuItem,
+			this.sourceCodeGithubcomToolStripMenuItem,
+			this.toolStripSeparator2,
+			this.aboutToolStripMenuItem});
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
 			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
 			this.helpToolStripMenuItem.Text = "&Help";
@@ -204,26 +204,26 @@ namespace ClipText
 			// mainStatusStrip
 			// 
 			this.mainStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.termsTextToolStripStatusLabel,
-									this.termsToolStripStatusLabel});
+			this.capturesTextToolStripStatusLabel,
+			this.capturesToolStripStatusLabel});
 			this.mainStatusStrip.Location = new System.Drawing.Point(0, 140);
 			this.mainStatusStrip.Name = "mainStatusStrip";
 			this.mainStatusStrip.Size = new System.Drawing.Size(284, 22);
 			this.mainStatusStrip.SizingGrip = false;
 			this.mainStatusStrip.TabIndex = 34;
 			// 
-			// termsTextToolStripStatusLabel
+			// capturesTextToolStripStatusLabel
 			// 
-			this.termsTextToolStripStatusLabel.Name = "termsTextToolStripStatusLabel";
-			this.termsTextToolStripStatusLabel.Size = new System.Drawing.Size(57, 17);
-			this.termsTextToolStripStatusLabel.Text = "Captures:";
+			this.capturesTextToolStripStatusLabel.Name = "capturesTextToolStripStatusLabel";
+			this.capturesTextToolStripStatusLabel.Size = new System.Drawing.Size(57, 17);
+			this.capturesTextToolStripStatusLabel.Text = "Captures:";
 			// 
-			// termsToolStripStatusLabel
+			// capturesToolStripStatusLabel
 			// 
-			this.termsToolStripStatusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.termsToolStripStatusLabel.Name = "termsToolStripStatusLabel";
-			this.termsToolStripStatusLabel.Size = new System.Drawing.Size(14, 17);
-			this.termsToolStripStatusLabel.Text = "0";
+			this.capturesToolStripStatusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.capturesToolStripStatusLabel.Name = "capturesToolStripStatusLabel";
+			this.capturesToolStripStatusLabel.Size = new System.Drawing.Size(14, 17);
+			this.capturesToolStripStatusLabel.Text = "0";
 			// 
 			// textFileSaveFileDialog
 			// 
@@ -329,6 +329,7 @@ namespace ClipText
 			this.mainTableLayoutPanel.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
+
 		}
 		private System.Windows.Forms.ImageList mainImageList;
 		private System.Windows.Forms.Button startStopButton;
@@ -338,8 +339,8 @@ namespace ClipText
 		private System.Windows.Forms.TableLayoutPanel mainTableLayoutPanel;
 		private System.Windows.Forms.SaveFileDialog textFileSaveFileDialog;
 		private System.Windows.Forms.ToolStripMenuItem rememberTextFileToolStripMenuItem;
-		private System.Windows.Forms.ToolStripStatusLabel termsToolStripStatusLabel;
-		private System.Windows.Forms.ToolStripStatusLabel termsTextToolStripStatusLabel;
+		private System.Windows.Forms.ToolStripStatusLabel capturesToolStripStatusLabel;
+		private System.Windows.Forms.ToolStripStatusLabel capturesTextToolStripStatusLabel;
 		private System.Windows.Forms.StatusStrip mainStatusStrip;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;

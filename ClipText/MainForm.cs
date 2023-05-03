@@ -32,6 +32,11 @@ namespace ClipText
         bool? addNewLine = null;
 
         /// <summary>
+        /// The captures.
+        /// </summary>
+        int captures = 0;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="T:ClipText.MainForm"/> class.
         /// </summary>
         public MainForm()
@@ -80,6 +85,18 @@ namespace ClipText
         }
 
         /// <summary>
+        /// Raises the captures.
+        /// </summary>
+        private void RaiseCaptures()
+        {
+            // Raise
+            this.captures++;
+
+            // Update in GUI
+            this.capturesToolStripStatusLabel.Text = this.captures.ToString();
+        }
+
+        /// <summary>
         /// Handles the start stop button click.
         /// </summary>
         /// <param name="sender">Sender object.</param>
@@ -112,7 +129,7 @@ namespace ClipText
                         }
                         else
                         {
-                            // Set according to file end
+                            // TODO Set according to file end [Read only the last few bytes instead of all text]
                             this.addNewLine = !File.ReadAllText(this.targetFileTextBox.Text).EndsWith(Environment.NewLine, StringComparison.CurrentCulture);
                         }
                     }
