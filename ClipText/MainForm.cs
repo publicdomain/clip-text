@@ -275,7 +275,15 @@ namespace ClipText
         /// <param name="e">Event arguments.</param>
         private void OnOpenFileButtonClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Reset file name
+            this.textFileOpenFileDialog.FileName = string.Empty;
+
+            // Show open file dialog
+            if (this.textFileOpenFileDialog.ShowDialog() == DialogResult.OK && this.textFileOpenFileDialog.FileNames.Length > 0)
+            {
+                // Set into text box
+                this.targetFileTextBox.Text = this.textFileOpenFileDialog.FileName;
+            }
         }
 
         /// <summary>
